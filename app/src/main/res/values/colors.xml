@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#FFF</color>
+
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimaryLight">#B2DFDB</color>
+    <color name="colorAccent">#607D8B</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorIcon"> #FFFFFF </color>
+    <color name="colorDivider"> #BDBDBD </color>
+    <color name="colorAlertError"> #d32f2f </color>
+    <color name="colorAlert">#d32f2f</color>
+    <color name="colorAlertDark">#d90c0c</color>
+    <color name="colorAlertLight">#d97171</color>
+    <color name="colorBackground">#ebeff0</color>
+    <color name="colorCardBackground">#ffffff</color>
+
+    <color name="colorPrimaryNight">@color/colorPrimary</color>
+    <color name="colorPrimaryDarkNight">@color/colorPrimaryDark</color>
+    <color name="colorPrimaryLightNight">@color/colorPrimaryLight</color>
+    <color name="colorAccentNight">@color/colorAccent</color>
+    <color name="colorPrimaryTextNight">#ffffff</color>
+    <color name="colorSecondaryTextNight">#e2e2e2</color>
+    <color name="colorIconNight"> #FFFFFF </color>
+    <color name="colorDividerNight"> #BDBDBD </color>
+    <color name="colorAlertErrorNight"> #d32f2f </color>
+    <color name="colorBackgroundNight">#000000</color>
+    <color name="colorCardBackgroundNight">#222222</color>
+
+    <color name="movieDBColorLight">#06332e</color>
+    <color name="movieDBColorCenter">#072327</color>
+    <color name="movieDBColorDark">#081c23</color>
+
+    <color name="progressFinishedColor">#d2d531</color>
+    <color name="progressUnfinishedColor">#423d0f</color>
+
+</resources>

@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">The Movie DB</string>
+    <!--Login Activity-->
+    <!--Field text-->
+    <string name="input_user">Username</string>
+    <string name="input_password">Password</string>
+    <string name="login_btn">Login</string>
+
+
+    <!--General Text-->
+    <string name="logout">Logout</string>
+    <string name="map_config">Configuracion de mapa</string>
+    <string name="dialog_default_positive">Si</string>
+    <string name="dialog_default_negative">No</string>
+    <string name="dialog_default_close">Cerrar</string>
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancelar</string>
+    <string name="close">Cerrar</string>
+    <string name="any">Ninguno</string>
+    <string name="reject">Rechazar</string>
+    <string name="start">Empezar</string>
+    <string name="start_without_code">Empezar sin codigo de verificacion</string>
+    <string name="percentage">%1$d %%</string>
+    <string name="completed">Completado</string>
+    <string name="downloading">Descargando…</string>
+    <string name="downloaded">Descargado</string>
+
+    <!--Errors-->
+    <string name="error_no_permission">Operacíon fallida por falta de permisos</string>
+    <string name="error_blank"> El campo %1$s no puede estar en blanco </string>
+    <string name="error_numeric"> El campo %1$s solo puede contener numeros </string>
+    <string name="error_letters"> El campo %1$s solo puede contener letras </string>
+    <string name="error_length"> El campo %1$s debe ser de longitud %2$s </string>
+    <string name="error_user_type"> Este usuario no puede usar esta aplicación </string>
+    <string name="error_user_saved"> No se pudo guardar la información del usuario en el dispositivo, intente otra vez, si el error persiste comuniquese con soporte técnico </string>
+    <string name="error_user_null"> Informacion de usuario nula, no se puede proceder, intente otra vez, si el error persiste comuniquese con soporte técnico </string>
+    <string name="error_token_save"> Error guardado información de sesión, intente otra vez, si el error persiste comuniquese con soporte técnico </string>
+    <string name="error_user"> Error en el inicio de sesión, intente otra vez, si el error persiste comuniquese con soporte técnico </string>
+    <string name="error_request_general"> Error al realizar esta acción, intente otra vez, si el error persiste comuniquese con soporte técnico </string>
+    <string name="error_fingerprint_not_found">Este usuario no tiene una huella registrada, por favor registre su huella primero y vuelva a intentar</string>
+
+    <string name="error_car_saved"> La configuracíon fue realizada exitosamente pero no se pudo guardar la información del vehículo en el dispositivo, comuniquese con soporte técnico </string>
+
+    <string name="error_config_not_found">Este dispositivo no cuenta con una configuración previa, consulte con soporte técnico si este error es repentino</string>
+
+    <string name="error_ride_variables_not_found">Este dispositivo no tiene la información necesaria para prestar el servicio, intente otra vez, si el error persiste comuniquese con soporte técnico</string>
+
+    <string name="error_dialog_title"> Error </string>
+    <string name="error_dialog_ok"> Entiendo </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="users">Usuarios</string>
+    <string name="purchases">Compras</string>
+    <string name="sales">Ventas</string>
+    <string name="config">Configuracion</string>
+    <string name="settings">Configurar variables</string>
+    <string name="profile">Profile</string>
+    <string name="name_label"><b>Nombre:</b> %1$s</string>
+    <string name="email_label"><b>Email:</b> %1$s</string>
+    <string name="state_label"><b>Estado:</b> %1$s</string>
+    <string name="code_label"><b>Codigo:</b> %1$s</string>
+    <string name="wallet_url_label"><b>Billetera:</b> %1$s</string>
+    <string name="moneyCode_label"><b>Moneda:</b> %1$s</string>
+    <string name="symbol_label"><b>Simbolo:</b> %1$s</string>
+    <string name="abbreviation_label"><b>Abreviacion:</b> %1$s</string>
+    <string name="identification_label"><b>ID:</b> %1$s</string>
+    <string name="identification_type_label"><b>Tipo ID:</b> %1$s</string>
+    <string name="balance_label"><b>Saldo:</b> %1$s</string>
+    <string name="phone_label"><b>Telefono:</b> %1$s</string>
+    <string name="identificationFront_label"><b>Frontal ID:</b></string>
+    <string name="identificationBack_label"><b>Trasera ID:</b></string>
+    <string name="publicReceipt_label"><b>Factura :</b></string>
+    <string name="country_label"><b>Pais:</b>  %1$s</string>
+    <string name="call">Llamar</string>
+    <string name="activate_user">Activar Usuario</string>
+    <string name="deactivate_user">Desactivar Usuario</string>
+    <string name="charges">Recargas</string>
+    <string name="date_label"><b>Fecha:</b> %1$s</string>
+    <string name="amount_label"><b>Monto:</b> %1$s</string>
+    <string name="evidence_label"><b>Evidencia:</b></string>
+    <string name="approve">Aprobar</string>
+    <string name="deny">Rechazar</string>
+    <string name="value_label"><b>Valor:</b> %1$s</string>
+    <string name="btc_label"><b>BTC:</b> %1$s</string>
+    <string name="bank_label"><b>Banco:</b> %1$s</string>
+    <string name="bank_number_label"><b>#Cuenta:</b> %1$s</string>
+    <string name="bank_owner_name"><b>Titular:</b> %1$s</string>
+    <string name="bank_owner_identification_label"><b>Titular ID:</b> %1$s</string>
+    <string name="bank_owner_document_type_label"><b>Titular Tipo ID:</b> %1$s</string>
+    <string name="select_image">Seleccionar Imagen</string>
+    <string name="delete">Eliminar</string>
+    <string name="transfer_evidence_label"><b>Soporte de Transferencia:</b></string>
+    <string name="deposit_evidence_label"><b>Soporte de Consignacion:</b></string>
+    <string name="input_lastTradePrice">Precio último cambio</string>
+    <string name="input_purchasePercentage">Porcentaje Compra</string>
+    <string name="input_salePercentage">Porcentaje Venta</string>
+    <string name="input_hourVolume">Volumen 24 horas (BTC)</string>
+    <string name="input_activeTraders">Usuarios activos</string>
+    <string name="save">Guardar</string>
+    <string name="change_password">Cambiar Contraseña</string>
+    <string name="input_name">Nombre</string>
+    <string name="input_email">Email</string>
+    <string name="input_password_confirmation">Confirmar Contraseña</string>
+    <string name="movies">Movies</string>
+    <string name="favorites">Favorites</string>
+    <string name="login">Login</string>
+
+    <string name="movie_title">%1$s <b>%2$s</b></string>
+    <string name="big_text">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    </string>
+    <string name="play_youtube">Play Trailer on Youtube</string>
+    <string name="overview"><b>Overview: </b> %1$s</string>
+    <string name="release_date"><b>Release Date: </b> %1$s</string>
+    <string name="cast">Cast</string>
+    <string name="guest">Guest</string>
+    <string name="signUp">Sign Up</string>
+    <string name="list_empty">This list is empty</string>
+
+</resources>
+
