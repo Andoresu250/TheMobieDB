@@ -30,5 +30,14 @@ public class Movies implements Serializable{
         }
     }
 
+    public Movies(){}
+
+    public Movies(List<Movie> results){
+        this.results = results;
+        this.page = 1;
+        this.totalResults = results.size();
+        this.totalPages = 1;
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.andoresu.themoviedb.core.authorization;
 
 import android.app.Dialog;
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.andoresu.themoviedb.core.authorization.data.LoginRequest;
 import com.andoresu.themoviedb.core.authorization.data.RequestToken;
 import com.andoresu.themoviedb.core.authorization.data.Session;
 import com.andoresu.themoviedb.core.authorization.data.User;
+import com.andoresu.themoviedb.database.AppDataBase;
 import com.andoresu.themoviedb.utils.BaseDialogFragment;
 
 import butterknife.BindView;
@@ -55,6 +57,7 @@ public class LoginDialogFragment extends BaseDialogFragment {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     private InteractionListener interactionListener;
+    private AppDataBase appDataBase;
 
     public LoginDialogFragment(){}
 
@@ -75,6 +78,7 @@ public class LoginDialogFragment extends BaseDialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.sessionService = ServiceGenerator.createAPIService(SessionService.class);
+        this.appDataBase =  Room.databaseBuilder(getContext(), AppDataBase.class, "moviesdb").allowMainThreadQueries().build();
     }
 
     @Nullable
@@ -147,9 +151,11 @@ public class LoginDialogFragment extends BaseDialogFragment {
                                                                                                     if(user != null){
                                                                                                         user.requestToken = loginRequestToken.getToken();
                                                                                                         user.sessionId = session.sessionId;
+                                                                                                        appDataBase.dataBaseDao().addUser(user);
                                                                                                         loginLayout.setVisibility(View.VISIBLE);
                                                                                                         progressBar.setVisibility(View.INVISIBLE);
                                                                                                         interactionListener.setUser(user);
+
                                                                                                         dismiss();
                                                                                                     }
                                                                                                 }

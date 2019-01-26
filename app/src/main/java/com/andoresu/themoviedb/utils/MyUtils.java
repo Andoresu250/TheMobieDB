@@ -22,6 +22,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -41,12 +42,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.andoresu.themoviedb.R;
 import com.andoresu.themoviedb.client.ErrorResponse;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -84,6 +88,71 @@ public class MyUtils {
         String regex = onlyUpperCase ? "[A-Z]+" : "[a-zA-Z]+";
         return s.matches(regex);
     }
+
+    public static String saveImage(Context context, Bitmap image, String fileName) {
+        try{
+            fileName = fileName.replaceAll("\\/","");
+            Log.i(TAG, "saveImage: filename: " + fileName);
+            File file = new File(context.getFilesDir() + File.separator + "movie_" + fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            return file.getAbsolutePath();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String saveImage(Bitmap image, String fileName) {
+        fileName = fileName.replaceAll("\\\\", "");
+        File path = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File file = new File(path, fileName);
+        try{
+            if(path.mkdirs()){
+                OutputStream fOut = new FileOutputStream(file);
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                fOut.close();
+            }
+            return file.getAbsolutePath();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+//        String savedImagePath = null;
+//        fileName = fileName.replaceAll("\\\\", "");
+//        String imageFileName = "JPEG_" + fileName;
+//        File storageDir = new File(
+//                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+//                        + "/Comicoid");
+//        boolean success = true;
+//        if (!storageDir.exists()) {
+//            success = storageDir.mkdirs();
+//        }
+//        if (success) {
+//            File imageFile = new File(storageDir, imageFileName);
+//            savedImagePath = imageFile.getAbsolutePath();
+//            try {
+//                OutputStream fOut = new FileOutputStream(imageFile);
+//                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+//                fOut.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return savedImagePath;
+    }
+
+//    private static void galleryAddPic(String imagePath) {
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(imagePath);
+//        Uri contentUri = Uri.fromFile(f);
+//        mediaScanIntent.setData(contentUri);
+//        context.sendBroadcast(mediaScanIntent);
+//    }
+
 
     public static void watchYoutubeVideo(Context context, String id){
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));

@@ -1,11 +1,11 @@
 package com.andoresu.themoviedb.core.movies;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.andoresu.themoviedb.R;
 import com.andoresu.themoviedb.core.movies.data.Movies;
+import com.andoresu.themoviedb.database.AppDataBase;
 import com.andoresu.themoviedb.utils.BaseFragment;
 import com.andoresu.themoviedb.utils.PaginationScrollListener;
 
@@ -87,7 +88,7 @@ public class MoviesFragment extends BaseFragment implements MoviesContract.View,
         swipeRefreshLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(this.getContext(), 1, false);
         moviesRecyclerView.setLayoutManager(linearLayoutManager);
-        movieAdapter = new MovieAdapter(getContext(), item -> interactionListener.movieDetail(item));
+        movieAdapter = new MovieAdapter(getContext(), item -> interactionListener.movieDetail(item), Room.databaseBuilder(getContext(), AppDataBase.class, "moviesdb").allowMainThreadQueries().build());
         moviesRecyclerView.setAdapter(movieAdapter);
         moviesRecyclerView.addOnScrollListener(getPaginationScrollListener());
         getMovies();

@@ -1,5 +1,6 @@
 package com.andoresu.themoviedb.core.moviedetail;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.andoresu.themoviedb.client.ObserverResponse;
@@ -10,6 +11,7 @@ import com.andoresu.themoviedb.core.movies.MoviesContract;
 import com.andoresu.themoviedb.core.movies.data.FavoriteRequest;
 import com.andoresu.themoviedb.core.movies.data.Movie;
 import com.andoresu.themoviedb.core.movies.data.SimpleBody;
+import com.andoresu.themoviedb.database.AppDataBase;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -23,10 +25,13 @@ public class MovieDetailPresenter implements MovieDetailContract.ActionsListener
 
     private final MovieService movieService;
 
+    private final AppDataBase appDataBase;
+
     public MovieDetailPresenter(MovieDetailContract.View view, Context context){
         this.context = context;
         this.view = view;
         this.movieService = ServiceGenerator.createAPIService(MovieService.class);
+        this.appDataBase = Room.databaseBuilder(context, AppDataBase.class, "moviesdb").allowMainThreadQueries().build();
     }
 
     @Override
@@ -45,12 +50,23 @@ public class MovieDetailPresenter implements MovieDetailContract.ActionsListener
                             }
                         }
                     }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Movie movie = appDataBase.dataBaseDao().getMovie(movieId);
+                        if(movie != null){
+                            view.showMovie(movie);
+                        }
+
+                    }
                 });
 
     }
 
     @Override
     public void addMovieToFavorites(User user, Movie movie) {
+        appDataBase.dataBaseDao().addMovieToFavorite(movie.id);
         movieService.addToFavorites(user.id, new FavoriteRequest(movie), user.sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

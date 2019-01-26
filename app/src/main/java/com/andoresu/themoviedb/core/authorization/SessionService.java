@@ -11,7 +11,10 @@ import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -29,7 +32,8 @@ public interface SessionService {
     @GET("account")
     Observable<Response<User>> getProfile(@Query("session_id") String sessionId);
 
-    @DELETE("authentication/session")
-    Observable<Response<ResponseBody>> logout(@Body Session session);
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "authentication/session", hasBody = true)
+    Observable<Response<ResponseBody>> logout(@Field("session_id") String sessionId);
 
 }

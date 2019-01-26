@@ -2,6 +2,8 @@ package com.andoresu.themoviedb.core.moviedetail;
 
 
 
+import android.arch.persistence.room.Room;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,12 +22,16 @@ import android.widget.TextView;
 
 import com.andoresu.themoviedb.R;
 import com.andoresu.themoviedb.core.movies.data.Movie;
+import com.andoresu.themoviedb.database.AppDataBase;
 import com.andoresu.themoviedb.utils.BaseFragment;
+import com.andoresu.themoviedb.utils.GlideListener;
 import com.bumptech.glide.Glide;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.lzyzsd.circleprogress.ArcProgress;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,6 +101,7 @@ public class MovieDetailFragment extends BaseFragment implements
     private LinearLayoutManager linearLayoutManager;
 
     private ActorAdapter actorAdapter;
+    private AppDataBase appDataBase;
 
     public MovieDetailFragment(){}
 
@@ -115,6 +122,7 @@ public class MovieDetailFragment extends BaseFragment implements
             this.movie = (Movie) bundle.getSerializable("movie");
         }
         this.actionsListener = new MovieDetailPresenter(this, getContext());
+        this.appDataBase = Room.databaseBuilder(getContext(), AppDataBase.class, "moviesdb").allowMainThreadQueries().build();
 
     }
 
@@ -158,11 +166,13 @@ public class MovieDetailFragment extends BaseFragment implements
         movieReleaseDateTextView.setText(getText(R.string.release_date, movie.getReleaseDate()));
         movieCastTextView.setVisibility(View.INVISIBLE);
         Glide.with(getContext())
-                .load(movie.getPosterThumbPath())
+                .load(movie.poster == null ? movie.getPosterThumbPath() : Uri.fromFile(new File(movie.poster)))
+                .listener(new GlideListener(appDataBase, GlideListener.POSTER_TYPE, movie, getContext()))
                 .apply(glideRequestOptions(getContext()))
                 .into(posterImageView);
         Glide.with(getContext())
-                .load(movie.getBackdropPath())
+                .load(movie.backdrop == null ? movie.getBackdropPath() : Uri.fromFile(new File(movie.backdrop)))
+                .listener(new GlideListener(appDataBase, GlideListener.BACKDROP_TYPE, movie, getContext()))
                 .apply(glideRequestOptions(getContext()))
                 .into(movieBackdropPathImageView);
         if(movie.getYoutubeVideo() != null){

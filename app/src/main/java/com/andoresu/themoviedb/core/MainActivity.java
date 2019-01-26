@@ -1,5 +1,6 @@
 package com.andoresu.themoviedb.core;
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import com.andoresu.themoviedb.core.moviedetail.MovieDetailFragment;
 import com.andoresu.themoviedb.core.movies.MoviesContract;
 import com.andoresu.themoviedb.core.movies.MoviesFragment;
 import com.andoresu.themoviedb.core.movies.data.Movie;
+import com.andoresu.themoviedb.database.AppDataBase;
 import com.andoresu.themoviedb.utils.BaseActivity;
 import com.andoresu.themoviedb.utils.BaseFragment;
 
@@ -61,6 +63,8 @@ public class MainActivity extends BaseActivity implements
 
     private BaseFragment currentFragment;
 
+    private AppDataBase appDataBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,8 @@ public class MainActivity extends BaseActivity implements
         navigationView.setNavigationItemSelectedListener(this);
 
         actionsListener = new MainPresenter(this, this);
+
+        this.appDataBase =  Room.databaseBuilder(this, AppDataBase.class, "moviesdb").allowMainThreadQueries().build();
 
         setMoviesFragment();
 
@@ -103,6 +109,9 @@ public class MainActivity extends BaseActivity implements
     }
 
     private void init(){
+        if(user == null){
+            user = appDataBase.dataBaseDao().getLoggedUser();
+        }
         Menu navMenu = navigationView.getMenu();
         MenuItem navLogin = navMenu.findItem(R.id.nav_login);
         MenuItem navProfile = navMenu.findItem(R.id.nav_profile);
@@ -155,7 +164,10 @@ public class MainActivity extends BaseActivity implements
 
                 break;
             case R.id.nav_logout:
-                actionsListener.logout(new Session(this.user.sessionId));
+                if(user != null && user.sessionId != null){
+                    actionsListener.logout(new Session(this.user.sessionId));
+                }
+                appDataBase.dataBaseDao().deleteUser();
                 this.user = null;
                 init();
                 break;

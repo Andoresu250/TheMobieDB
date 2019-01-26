@@ -1,6 +1,8 @@
 package com.andoresu.themoviedb.core.movies;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.util.Log;
 
 import com.andoresu.themoviedb.client.ObserverResponse;
 import com.andoresu.themoviedb.client.ServiceGenerator;
@@ -8,6 +10,7 @@ import com.andoresu.themoviedb.core.authorization.data.User;
 import com.andoresu.themoviedb.core.movies.data.Genre;
 import com.andoresu.themoviedb.core.movies.data.Movie;
 import com.andoresu.themoviedb.core.movies.data.Movies;
+import com.andoresu.themoviedb.database.AppDataBase;
 
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,8 @@ import retrofit2.Response;
 
 public class MoviesPresenter implements MoviesContract.ActionsListener{
 
+    public static final String TAG = "THEMOVIEDB_" + MoviesPresenter.class.getSimpleName();
+
     private final MoviesContract.View view;
 
     private final Context context;
@@ -27,10 +32,13 @@ public class MoviesPresenter implements MoviesContract.ActionsListener{
 
     private List<Genre> genres;
 
+    private final AppDataBase appDataBase;
+
     public MoviesPresenter(MoviesContract.View view, Context context) {
         this.view = view;
         this.context = context;
         this.movieService = ServiceGenerator.createAPIService(MovieService.class);
+        this.appDataBase = Room.databaseBuilder(context, AppDataBase.class, "moviesdb").allowMainThreadQueries().build();
     }
 
     @Override
@@ -73,12 +81,12 @@ public class MoviesPresenter implements MoviesContract.ActionsListener{
                                 return;
                             }
                         }
-                        view.showMovies(null);
+                        showLocalMovies(favorites);
                     }
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        view.showMovies(null);
+                        showLocalMovies(favorites);
                     }
                 });
 
@@ -88,17 +96,17 @@ public class MoviesPresenter implements MoviesContract.ActionsListener{
         movieService.discover(options)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(moviesObserver(genres));
+                .subscribe(moviesObserver(genres, false));
     }
 
     public void getFavorites(Map<String, String> options, List<Genre> genres, User user){
         movieService.favorites(user.id, options, user.sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(moviesObserver(genres));
+                .subscribe(moviesObserver(genres, true));
     }
 
-    public ObserverResponse<Response<Movies>> moviesObserver(List<Genre> genres){
+    public ObserverResponse<Response<Movies>> moviesObserver(List<Genre> genres, boolean favorites){
         return new ObserverResponse<Response<Movies>>(view){
             @Override
             public void onNext(Response<Movies> moviesResponse) {
@@ -108,20 +116,47 @@ public class MoviesPresenter implements MoviesContract.ActionsListener{
                     if(movies != null){
                         for(Movie movie : movies.results){
                             movie.setGenres(genres);
+                            movie.favorite = favorites;
                         }
+                        saveMovies(movies.results);
                         view.showMovies(movies);
                         return;
                     }
                 }
-                view.showMovies(null);
+                showLocalMovies(favorites);
             }
 
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                view.showMovies(null);
+                showLocalMovies(favorites);
             }
         };
+    }
+
+    public void saveMovies(List<Movie> movies){
+        for(Movie movie : movies){
+            movie.init();
+            appDataBase.dataBaseDao().addMovie(movie);
+        }
+    }
+
+    public List<Movie> getLocalMovies(){
+        return appDataBase.dataBaseDao().getMovies();
+    }
+
+    public List<Movie> getLocalFavorites(){
+        return appDataBase.dataBaseDao().getFavorites();
+    }
+
+    public void showLocalMovies(boolean favorites){
+        List<Movie> movies = favorites ? getLocalFavorites() : getLocalMovies();
+        if(movies != null){
+            view.showMovies(new Movies(movies));
+        }else{
+            view.showMovies(null);
+        }
+        view.showProgressIndicator(false);
     }
 
 

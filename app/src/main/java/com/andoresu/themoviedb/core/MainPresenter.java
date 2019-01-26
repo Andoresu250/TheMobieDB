@@ -30,7 +30,7 @@ public class MainPresenter implements MainContract.ActionsListener {
 
     @Override
     public void logout(Session session) {
-        sessionService.logout(session)
+        sessionService.logout(session.sessionId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ObserverResponse<Response<ResponseBody>>(){});
